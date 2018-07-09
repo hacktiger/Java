@@ -1,0 +1,4 @@
+DD/MM/YY (2018)
+7/7 :  start project
+9/7 :  overhaul, change basics to only array int[] for better handling of the possitions
+	finish minor supporting methods

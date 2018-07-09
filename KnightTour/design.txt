@@ -1,0 +1,23 @@
+1. Make board/board int[]
+2. squares = num => possible moves = array
+3. marked square that have been moved
+
+
+
+////
+design
+////
+
+--> possible moves
+- check if moveable
+- check if already there
+->> generate possible moves
+ if possibleMoves == 0 :
+	if squareLeft == 0 :
+		done
+	else :
+	   	restart game
+ else:
+-> takes one at random
+-> repeat
+
