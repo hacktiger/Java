@@ -3,7 +3,9 @@ package knighttour;
 import java.util.ArrayList;
 
 /**
- *
+ * @effects
+ *          a program that trys to solve the knight tour problem
+ *          RANDOMLY and stops if fails 
  * @author Dell
  */
 public class KnightTour {
@@ -33,7 +35,7 @@ public class KnightTour {
      */
     public static void printBoard(int[] board) {
         for (int i = 0; i < board.length; i++) {
-            System.out.print(i + " ");
+            System.out.print(board[i] + " ");
             if ((i + 1) % 8 == 0) {
                 System.out.print("\n");
             }
@@ -58,6 +60,17 @@ public class KnightTour {
     }
 
     /**
+     *
+     */
+    public static boolean isOccupied(int tilePosition, int[] board) {
+        boolean answer = false;
+        if (board[tilePosition] == 1) {
+            answer = true;
+        }
+        return answer;
+    }
+
+    /**
      * Calculate possible moves that the knight can make even in corner
      * positions and return the result in form of coordinates in array list ex :
      * {6,10,15,17}
@@ -65,35 +78,58 @@ public class KnightTour {
      * @param currentPosition
      * @return array
      */
-    public static ArrayList calculateMoves(int currentPosition) {
+    public static ArrayList calculateMoves(int currentPosition, int[] board) {
         //From the current position -> return correspoding possible moves
         // Store possible moves in the array list
         ArrayList<Integer> temp = new ArrayList<>();
         // normally there are 8 possible moves
         if (currentPosition % 8 != 0 && currentPosition % 8 != 1) {
-            if(currentPosition < 56)
-                temp.add(6);
-            if(currentPosition > 7 )
-                temp.add(-10); 
+            if (currentPosition < 56) {
+                if (!isOccupied(currentPosition + 6, board)) {
+                    temp.add(6);
+                }
+            }
+            if (currentPosition > 7) {
+                if (!isOccupied(currentPosition -10, board)) {
+                    temp.add(-10);
+                }
+            }
         }
-        if (currentPosition % 8 != 6 && currentPosition % 8 != 7 ) {
-            if(currentPosition < 56)
-                temp.add(10);
-            
-            if(currentPosition > 7)
-                temp.add(-6);     
+        if (currentPosition % 8 != 6 && currentPosition % 8 != 7) {
+            if (currentPosition < 56) {
+                if (!isOccupied(currentPosition + 10, board)) {
+                    temp.add(10);
+                }
+            }
+            if (currentPosition > 7) {
+                if (!isOccupied(currentPosition -6, board)) {
+                    temp.add(-6);
+                }
+            }
         }
-        if (currentPosition % 8 != 0 ) {
-            if(currentPosition < 48)
-                temp.add(15); 
-            if(currentPosition > 15)
-                temp.add(-17);        
+        if (currentPosition % 8 != 0) {
+            if (currentPosition < 48) {
+                if (!isOccupied(currentPosition + 15, board)) {
+                    temp.add(15);
+                }
+            }
+            if (currentPosition > 15) {
+                if (!isOccupied(currentPosition + -17, board)) {
+                    temp.add(-17);
+                }
+            }
         }
-        if (currentPosition % 8 != 7  ) {
-            if(currentPosition < 48)
-               temp.add(17); 
-            if(currentPosition > 15)
-                temp.add(-15);
+        if (currentPosition % 8 != 7) {
+            if (currentPosition < 48) {
+                if (!isOccupied(currentPosition + 17, board)) {
+                    temp.add(17);
+                }
+            }
+            if (currentPosition > 15) {
+                if (!isOccupied(currentPosition -15, board)) {
+                    temp.add(-15);
+                }
+            }
         }
         /**
          * temp.add(-6); temp.add(-10); temp.add(-15); temp.add(-17);
@@ -112,37 +148,63 @@ public class KnightTour {
         //fill board with 0s ( reset )
         fillBoard(board);
         //Place knight  
-        ArrayList<Integer> test = new ArrayList<>();
+        ArrayList<Integer> test = new ArrayList();
         //CURRENT POSITION
-        int currentPos = randInt(63);
+        int currentPos = 0;
         board[currentPos] = 7;
         // Print the original state
-        printBoard(board);
-        // Challenge Loop
-        test = calculateMoves(currentPos);
-
-        //
-        boolean yes = true;
-        if (!test.isEmpty() && yes == false) {
-            int random = randInt(test.size());
-            board[currentPos] = 1;
-            currentPos += test.get(random);
-            board[currentPos] = 7;
-
-            printBoard(board);
-        } else {
-            System.out.println("Out of moves");
-        }
-        //TEST ZONE
+        // GROUND ZERO
+        System.out.println("First try");
+        test = calculateMoves(currentPos, board);
         System.out.println("current pos : " + currentPos);
-        System.out.println("Possible moves");
+        System.out.println("Possible moves" + "\n");
 
         for (Integer x : test) {
             System.out.print(x + " ");
         }
-        System.out.println("");
-        // foreach loop
+        printBoard(board);
+        //////// LOOP
+        boolean done = false;
+        int count = 1;
+        while (done == false) {
+            //if set moves is empty
+            if (test.isEmpty()) {
+                count++;
+                System.out.println("Try number : ////////////////////////////////////////////////////////////////" + count);
+                fillBoard(board);
+                currentPos = 0;
+                board[currentPos] = 7;
+                test = calculateMoves(currentPos, board);
+            } else {
+                test = calculateMoves(currentPos, board);
+            }
+            int random = randInt(test.size());
+            int prevPos = currentPos;
+            currentPos += test.get(random);
+            board[prevPos] = 1;
+            ///// INFO WITH NEW MOVES
+            System.out.println("From: " + prevPos + " Move taken: " + test.get(random) + " to:" + currentPos);
+            System.out.println("current pos : " + currentPos);
+            System.out.println("Possible moves");
+            for (Integer x : test) {
+                System.out.print(x + " ");
+            }
+            System.out.println("");
+
+            board[currentPos] = 7;
+            System.out.println("");
+            printBoard(board);
+        }
+        // IF OUT OF MOVES
+        if (done == true) {
+            System.out.println("Out of moves");
+        }
+
         /**
+         * //TEST ZONE
+         *
+         * // foreach loop
+         *
          * for (Integer x : test){ System.out.println(x); }
          */
         ///////////////////////////////////
