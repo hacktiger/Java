@@ -4,3 +4,4 @@ DD/MM/YY (2018)
 	finish minor supporting methods
 11/7: done possible moves
 12/7: can now run till out of moves but RANDOMLY and only ONCE
+14/7: FINISHED ( but it solves the problem randomly )

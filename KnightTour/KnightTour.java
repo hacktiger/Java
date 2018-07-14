@@ -3,9 +3,8 @@ package knighttour;
 import java.util.ArrayList;
 
 /**
- * @effects
- *          a program that trys to solve the knight tour problem
- *          RANDOMLY and stops if fails 
+ * @effects a program that trys to solve the knight tour problem RANDOMLY and
+ * stops if fails
  * @author Dell
  */
 public class KnightTour {
@@ -23,7 +22,7 @@ public class KnightTour {
      * @effects fill the board with 0s ( reset the board )
      */
     public static void fillBoard(int[] board) {
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 64; i++) {
             board[i] = 0;
         }
     }
@@ -61,6 +60,9 @@ public class KnightTour {
 
     /**
      *
+     * @param tilePosition
+     * @param board
+     * @return answer ( boolean )
      */
     public static boolean isOccupied(int tilePosition, int[] board) {
         boolean answer = false;
@@ -90,7 +92,7 @@ public class KnightTour {
                 }
             }
             if (currentPosition > 7) {
-                if (!isOccupied(currentPosition -10, board)) {
+                if (!isOccupied(currentPosition - 10, board)) {
                     temp.add(-10);
                 }
             }
@@ -102,7 +104,7 @@ public class KnightTour {
                 }
             }
             if (currentPosition > 7) {
-                if (!isOccupied(currentPosition -6, board)) {
+                if (!isOccupied(currentPosition - 6, board)) {
                     temp.add(-6);
                 }
             }
@@ -126,7 +128,7 @@ public class KnightTour {
                 }
             }
             if (currentPosition > 15) {
-                if (!isOccupied(currentPosition -15, board)) {
+                if (!isOccupied(currentPosition - 15, board)) {
                     temp.add(-15);
                 }
             }
@@ -167,33 +169,64 @@ public class KnightTour {
         boolean done = false;
         int count = 1;
         while (done == false) {
+            test = calculateMoves(currentPos, board);
+            System.out.println("Current pos : " + currentPos);
+            System.out.println("Arr size : " + test.size());
+
             //if set moves is empty
             if (test.isEmpty()) {
                 count++;
-                System.out.println("Try number : ////////////////////////////////////////////////////////////////" + count);
+                System.out.println("Try number : ////////////////////////////////   : " + count);
                 fillBoard(board);
                 currentPos = 0;
                 board[currentPos] = 7;
+                printBoard(board);
                 test = calculateMoves(currentPos, board);
+                
+                int random = randInt(test.size());
+                int prevPos = currentPos;
+                currentPos += test.get(random);
+                board[prevPos] = 1;
+                ///// INFO WITH NEW MOVES
+                System.out.println("From: " + prevPos + " Move taken: " + test.get(random) + " to:" + currentPos);
+                System.out.println("current pos : " + currentPos);
+                System.out.println("Possible moves");
+                for (Integer x : test) {
+                    System.out.print(x + " ");
+                }
+                System.out.println("");
+
+                board[currentPos] = 7;
+                System.out.println("");
+                printBoard(board);
             } else {
                 test = calculateMoves(currentPos, board);
-            }
-            int random = randInt(test.size());
-            int prevPos = currentPos;
-            currentPos += test.get(random);
-            board[prevPos] = 1;
-            ///// INFO WITH NEW MOVES
-            System.out.println("From: " + prevPos + " Move taken: " + test.get(random) + " to:" + currentPos);
-            System.out.println("current pos : " + currentPos);
-            System.out.println("Possible moves");
-            for (Integer x : test) {
-                System.out.print(x + " ");
-            }
-            System.out.println("");
 
-            board[currentPos] = 7;
-            System.out.println("");
-            printBoard(board);
+                int random = randInt(test.size());
+                int prevPos = currentPos;
+                currentPos += test.get(random);
+                board[prevPos] = 1;
+                ///// INFO WITH NEW MOVES
+                System.out.println("From: " + prevPos + " Move taken: " + test.get(random) + " to:" + currentPos);
+                System.out.println("current pos : " + currentPos);
+                System.out.println("Possible moves");
+                for (Integer x : test) {
+                    System.out.print(x + " ");
+                }
+                System.out.println("");
+
+                board[currentPos] = 7;
+                System.out.println("");
+                printBoard(board);
+                
+                if(isFinished(board)){
+                    done = true;
+                    System.out.println(" ///// ERUKA ////");
+                    printBoard(board);
+                    System.out.println("/////       /////");
+                }
+            }
+
         }
         // IF OUT OF MOVES
         if (done == true) {
