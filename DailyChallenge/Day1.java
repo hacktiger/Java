@@ -34,9 +34,9 @@ public class Day1 {
      * @return 
      */
     public static boolean solveProblemManyPass(int[] array, int sum){
-        for(int i = 0; i < array.length - 2; i++){
-            for(int k = 0; k < array.length; k++){
-                if( array[i] + array[k] == sum && i != k ){
+        for(int i = 0; i < array.length - 1; i++){
+            for(int k = i + 1; k < array.length; k++){
+                if(array[i] + array[k] == sum){
                     return true;
                 }
             }
@@ -61,22 +61,19 @@ public class Day1 {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        long rt = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
-        int sum;
         boolean result;
         int[] numArray = {10, 15, 3, 7};
         // Prints out the array
         printArray(numArray);
         // Get the sum you wanted
-        sum = 25;
+        int sum = 17;
         //Solve the problem
         result = solveProblemManyPass(numArray, sum);
         if(result)
             System.out.println(" Yes ");
         else
             System.out.println(" No ");
-        // Prints runtime/ Memory
-        System.out.println("Memory : " + rt);
+
     }
     
 
