@@ -1,8 +1,5 @@
 package dailycodingproblem;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Given the mapping a = 1, b = 2, ... z = 26, and an encoded message, count the
  * number of ways it can be decoded.
@@ -16,37 +13,6 @@ import java.util.Map;
  * @author Dell
  */
 class Day7 {
-
-    /**
-     * @effects generate the coding map
-     * @return
-     */
-    public static Map generateMap() {
-        Map<Integer, Character> map = new HashMap<>();
-        int count = 1;
-        for (char c = 'A'; c <= 'Z'; c++) {
-            map.put(count, c);
-            count++;
-        }
-        return map;
-    }
-
-    public static void printMap(Map<Integer, Character> map) {
-        map.entrySet().forEach((m) -> {
-            System.out.println(m.getKey() + " " + m.getValue());
-        });
-    }
-
-    /**
-     *
-     * @param message
-     * @return
-     */
-    public static String decodeMessage(int message) {
-        String result = null;
-
-        return result;
-    }
     // A simple recursive program to find n'th fibonacci number
     static int fib(int n)
     {
@@ -67,8 +33,6 @@ class Day7 {
     public static void main(String[] args) {
         int message = 1121;
         int length = String.valueOf(message).length();
-        Map<Integer, Character> map = new HashMap<>();
-        map = generateMap();
         
         System.out.println(countWays(length));
 
