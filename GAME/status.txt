@@ -1,0 +1,9 @@
+Going quite well,
+done with basic mechanics like collision/shooting + killing/multiple levels/ health/mana bars/animations...
+
+to do :
+- add different player actack skill ?
+- add shop ?
+- add skilltree ?
+- add more level?(current 3)
+- add some AI mechanics( currently just moving sideways back and forth )
